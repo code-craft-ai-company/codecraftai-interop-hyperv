@@ -195,3 +195,35 @@ def test_cmdlet_error_on_timeout():
     with pytest.raises(HypervCmdletError):
         client.host.host_info()
     return
+
+
+def test_shutdown_vm_uses_graceful_stop_vm_without_shutdown_param():
+    # Regression for NR-H2: Stop-VM has no -Shutdown parameter; a graceful
+    # shutdown is Stop-VM without -Force.
+    runner = MockCommandRunner()
+    runner.seed(contains="Stop-VM", stdout="")
+    client = HypervClient(runner=runner, credential=_credential())
+    client.vms.shutdown_vm(name="vm01")
+    stop_calls = [c for c in runner.invocations if "Stop-VM" in c]
+    assert len(stop_calls) == 1
+    dispatched = stop_calls[0]
+    assert "-Shutdown" not in dispatched
+    assert "-Force" not in dispatched
+    assert "-Name 'vm01'" in dispatched
+    return
+
+
+def test_aspects_runner_is_immutable():
+    # Regression for the mutable-default-argument finding: AspectsRunner is
+    # used as the shared DEFAULT_HYPERV_ASPECTS default parameter, so it
+    # must reject post-construction mutation.
+    from automojo.interop.hyperv.aspectshyperv import (
+        AspectsRunner,
+        DEFAULT_HYPERV_ASPECTS,
+    )
+    aspects = AspectsRunner()
+    with pytest.raises(AttributeError):
+        aspects.elevated = False
+    with pytest.raises(AttributeError):
+        DEFAULT_HYPERV_ASPECTS.max_attempts = 99
+    return
