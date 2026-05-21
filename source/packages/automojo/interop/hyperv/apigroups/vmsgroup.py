@@ -163,7 +163,11 @@ class VmsGroup:
     def shutdown_vm(self, *, name: str,
                     aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS) -> None:
         """
-            Gracefully shut down a VM with ``Stop-VM -Force:$false``.
+            Gracefully shut down a VM with ``Stop-VM`` (no ``-Force``).
+
+            ``Stop-VM`` performs a graceful guest-OS shutdown through the
+            Hyper-V integration services when ``-Force`` is omitted; the
+            cmdlet has no ``-Shutdown`` parameter.
 
             :param name: The VM name.
             :param aspects: AspectsRunner controlling behaviour.
@@ -172,7 +176,6 @@ class VmsGroup:
         """
         builder = PwshScriptBuilder(cmdlet="Stop-VM")
         builder.parameter(name="Name", value=name)
-        builder.literal_parameter(name="Shutdown", value="true")
         builder.without_json()
         self._dispatcher.dispatch_void(builder=builder, aspects=aspects)
         return

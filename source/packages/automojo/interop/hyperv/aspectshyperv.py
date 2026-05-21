@@ -14,6 +14,8 @@ __copyright__ = "Copyright 2026, Automation Mojo LLC"
 __credits__ = []
 
 
+import os
+
 from typing import Optional
 
 from automojo.aspects.aspects import Aspects
@@ -56,7 +58,36 @@ class AspectsRunner(Aspects):
                          connection_timeout=connection_timeout,
                          max_attempts=max_attempts,
                          logger_name=logger_name)
-        self.elevated: bool = elevated
+        object.__setattr__(self, "elevated", elevated)
+        object.__setattr__(self, "_frozen", True)
+        return
+
+    def __setattr__(self, name: str, value: object) -> None:
+        """
+            Reject post-construction mutation.
+
+            :class:`AspectsRunner` is an immutable behaviour value object so
+            that the shared :data:`DEFAULT_HYPERV_ASPECTS` instance can be
+            used as a default parameter without the shared-mutation hazard
+            of a mutable default. Construct a new instance to vary
+            behaviour.
+
+            :param name: The attribute name.
+            :param value: The attribute value.
+
+            :raises: AttributeError
+        """
+        already_frozen = getattr(self, "_frozen", False)
+        if already_frozen is True:
+            err_msg_lines = [
+                "AspectsRunner is immutable; construct a new instance "
+                "to vary behaviour."
+            ]
+            err_msg_lines.append("ATTRIBUTE: {}".format(name))
+            err_msg = os.linesep.join(err_msg_lines)
+            raise AttributeError(err_msg)
+
+        object.__setattr__(self, name, value)
         return
 
 
