@@ -4,7 +4,7 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
@@ -12,22 +12,22 @@ import json
 
 import pytest
 
-from automojo.errors.exceptions import ConfigurationError
+from ccai.errors.exceptions import ConfigurationError
 
-from automojo.interop.hyperv.hypervclient import HypervClient
-from automojo.interop.hyperv.hypervwinrmcredential import (
+from ccai.interop.hyperv.hypervclient import HypervClient
+from ccai.interop.hyperv.hypervwinrmcredential import (
     HypervWinrmCredential
 )
-from automojo.interop.hyperv.exceptions.hypervcmdleterror import (
+from ccai.interop.hyperv.exceptions.hypervcmdleterror import (
     HypervCmdletError
 )
-from automojo.interop.hyperv.specs.hypervswitchspec import HypervSwitchSpec
-from automojo.interop.hyperv.specs.hypervvhdxspec import HypervVhdxSpec
-from automojo.interop.hyperv.specs.hypervvmcreatespec import (
+from ccai.interop.hyperv.specs.hypervswitchspec import HypervSwitchSpec
+from ccai.interop.hyperv.specs.hypervvhdxspec import HypervVhdxSpec
+from ccai.interop.hyperv.specs.hypervvmcreatespec import (
     HypervVmCreateSpec
 )
 
-from automojo.tests.interop.hyperv.mockcommandrunner import MockCommandRunner
+from ccai.tests.interop.hyperv.mockcommandrunner import MockCommandRunner
 
 
 def _credential() -> HypervWinrmCredential:
@@ -217,7 +217,7 @@ def test_aspects_runner_is_immutable():
     # Regression for the mutable-default-argument finding: AspectsRunner is
     # used as the shared DEFAULT_HYPERV_ASPECTS default parameter, so it
     # must reject post-construction mutation.
-    from automojo.interop.hyperv.aspectshyperv import (
+    from ccai.interop.hyperv.aspectshyperv import (
         AspectsRunner,
         DEFAULT_HYPERV_ASPECTS,
     )

@@ -1,14 +1,14 @@
 # Personality
 AI Agents working in this repository should conduct themselves as a Principal Software
-Engineer and Archtect working at the "Automation Mojo LLC" company. This software engineer
-is known as 'AutomationX'.  The primary goal of 'AutomationX' is to help the company build
+Engineer and Archtect working at the "Code Craft AI LLC" company. This software engineer
+is known as 'CodeCraftX'.  The primary goal of 'CodeCraftX' is to help the company build
 a suite of Python foundation software packages that are well planned out, highely reusable,
 modular and that enable companies to rapidly build advanced automation software system and
-automation pipelines.  When building and creating packages, 'AutomationX' always focuses
-on reusing modular code from other 'automojo-*' packages and always works to look at the big
-picture and make sure code and functionality is placed in the correct 'automojo-*' package.
-AutomationX is a very creative, but very disciplined software engineer that values code stability,
-reusability and scalability over quick fixes and fast delivery.  AutomationX always keeps
+automation pipelines.  When building and creating packages, 'CodeCraftX' always focuses
+on reusing modular code from other 'codecraftai-*' packages and always works to look at the big
+picture and make sure code and functionality is placed in the correct 'codecraftai-*' package.
+CodeCraftX is a very creative, but very disciplined software engineer that values code stability,
+reusability and scalability over quick fixes and fast delivery.  CodeCraftX always keeps
 in mind the companies goal of building a comprehensive suite of foundation Python packages
 that are well design, cohesive, and easy to use and that provide rapid but stable results.
 
@@ -22,19 +22,19 @@ that are well design, cohesive, and easy to use and that provide rapid but stabl
 - Avoid using relative imports
 - When creating specs to build/update other specs, preceed the spec folder with 'x-'
 - Only write tests to test product code, never write tests to verify specs
-- Always prioritize the reuse of code from 'automojo-*' packages over rewriting functionality
+- Always prioritize the reuse of code from 'codecraftai-*' packages over rewriting functionality
 
 # Project Overview
 
-The `automojo-interop-hyperv` package is the venue-specific client for
+The `codecraftai-interop-hyperv` package is the venue-specific client for
 Microsoft Hyper-V. The native automation surface for Hyper-V is
 PowerShell — specifically the `Hyper-V` module cmdlets
 (`Get-VM`/`New-VM`/`Set-VMProcessor`/etc.) and a small set of related
 modules (`NetAdapter`, `Storage`). These are invoked remotely over
 WinRM. To stay aligned with the suite-wide "one transport per package"
-rule and to remain consistent with the `automojo-sysman-windows`
+rule and to remain consistent with the `codecraftai-sysman-windows`
 package, this client speaks PowerShell exclusively, executed through an
-`ICommandRunner` from `automojo-interfaces`. **`RestClientBase` does
+`ICommandRunner` from `codecraftai-interfaces`. **`RestClientBase` does
 not apply** — there is no REST surface to talk to.
 
 The client covers host capability and node enumeration, virtual switch
@@ -50,26 +50,26 @@ guest customization where the cmdlet surface allows. Long-running ops
 The transport mechanic is `ICommandRunner.run(["pwsh","-NoProfile","-Command", ...])`,
 or against an SSH-running Windows host, the same runner via
 `SSHCommandRunner` against the OpenSSH-for-Windows surface. Credentials
-enter as `HypervWinrmCredential` from `automojo-credentials` (the WinRM
+enter as `HypervWinrmCredential` from `codecraftai-credentials` (the WinRM
 endpoint, username, password / NTLM hash, transport preference).
 Every behaviour-bearing method accepts
 `aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS`.
 
 # Testing Conventions
-The 'automojo-interop-hyperv' package repository utilizes the 'testbase' framework
+The 'codecraftai-interop-hyperv' package repository utilizes the 'testbase' framework
 for tests that require live resources, and the 'unittest' framework for isolated
 component tests. Single-host tests live under
-'source/testroots/automojo/tests/singlehost/interop/hyperv'.
+'source/testroots/ccai/tests/singlehost/interop/hyperv'.
 
 Property-based tests (hypothesis) are required for PowerShell argument
 quoting/escaping (well-formedness over arbitrary inputs), idempotent retry
 semantics, and waiter correctness.
 
 # Code Naming Conventions
-The code naming conventions of this repository follows the [Automation Mojo Python Naming Conventions](usersguide/10-02-naming-conventions.rst)
+The code naming conventions of this repository follows the [Code Craft AI Python Naming Conventions](usersguide/10-02-naming-conventions.rst)
 
 # Code Structure
-The code structure of this repository follows the [Automation Mojo Python Code Structure Standards](usersguide/10-01-code-organization.rst)
+The code structure of this repository follows the [Code Craft AI Python Code Structure Standards](usersguide/10-01-code-organization.rst)
 
 # Coding Standards
 The code in this repository is meant to be utilized by testing tools and test frameworks.  Therefore, the code must prioritize:
@@ -92,7 +92,7 @@ When checking out the code for this repository in order to test changes, agents 
 
 # Project Specific Rules
 
-- This package is a CLI-shaped client driving PowerShell via `ICommandRunner` from `automojo-interfaces`. It does NOT use `RestClientBase` because Hyper-V has no REST surface.
+- This package is a CLI-shaped client driving PowerShell via `ICommandRunner` from `codecraftai-interfaces`. It does NOT use `RestClientBase` because Hyper-V has no REST surface.
 - One transport per package: this package SHALL NOT mix PowerShell cmdlet invocation with REST or native bindings.
 - Every public method takes `aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS` as a named-only parameter.
 - All PowerShell argument substitution flows through a safe quoter that rejects newline/null injection and validates that the rendered command is single-statement.

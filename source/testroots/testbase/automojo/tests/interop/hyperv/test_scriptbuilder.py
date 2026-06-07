@@ -3,7 +3,7 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
@@ -11,9 +11,9 @@ import pytest
 
 from hypothesis import given, strategies as st
 
-from automojo.errors.exceptions import SemanticError
+from ccai.errors.exceptions import SemanticError
 
-from automojo.interop.hyperv.pwsh.pwshscriptbuilder import PwshScriptBuilder
+from ccai.interop.hyperv.pwsh.pwshscriptbuilder import PwshScriptBuilder
 
 
 def test_render_simple_cmdlet():

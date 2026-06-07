@@ -20,7 +20,7 @@ the cmdlets back into Python typed records.
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│  automojo-provisioning / venues / hyperv               │
+│  codecraftai-provisioning / venues / hyperv               │
 └──────────┬─────────────────────────────────────────────┘
            │
            ▼
@@ -57,7 +57,7 @@ Exceptions: `HypervCmdletError`, `HypervTaskFailedError`.
 ## Module Layout
 
 ```
-source/packages/automojo/interop/hyperv/
+source/packages/ccai/interop/hyperv/
 ├── hypervclient.py
 ├── aspectshyperv.py             # AspectsRunner + DEFAULT_HYPERV_ASPECTS
 ├── pwsh/
@@ -76,8 +76,8 @@ source/packages/automojo/interop/hyperv/
 
 ## See Also
 
-- `automojo-interfaces/specs/icommandrunner/` — the runner contract.
-- `automojo-provisioning/specs/venue-hyperv/`
+- `codecraftai-interfaces/specs/icommandrunner/` — the runner contract.
+- `codecraftai-provisioning/specs/venue-hyperv/`
 - Cross-cutting usability commitment §8.1 — Hyper-V is the CLI-shaped sibling to libvirt/Xen native examples.
 
 ---
