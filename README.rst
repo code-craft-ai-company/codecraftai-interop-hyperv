@@ -1,12 +1,12 @@
 =========================================
-Automation Mojo Interop - Hyper-V
+Code Craft AI Interop - Hyper-V
 =========================================
 
-The ``automojo-interop-hyperv`` package is the venue-specific client for Microsoft
+The ``codecraftai-interop-hyperv`` package is the venue-specific client for Microsoft
 Hyper-V. The native automation surface for Hyper-V is PowerShell — the ``Hyper-V`` module
 cmdlets plus a small set of related modules — invoked remotely over WinRM. To stay aligned
 with the suite-wide "one transport per package" rule, this client speaks PowerShell
-exclusively, executed through an ``ICommandRunner`` from ``automojo-interfaces``;
+exclusively, executed through an ``ICommandRunner`` from ``codecraftai-interfaces``;
 ``RestClientBase`` does not apply.
 
 Highlights
@@ -16,15 +16,15 @@ Highlights
 - Switch and disk management — virtual switch management (External / Internal / Private) and virtual disk (VHDX) management.
 - VM lifecycle — New/Start/Stop/Restart/Shutdown/Remove, template / sysprep-from-VHDX provisioning, hardware configuration (processors, memory, generation, secure boot), and virtual NIC/disk attach-detach.
 - Checkpoints and task handles — checkpoint (snapshot) management, PS-Session-based guest customization, and a typed ``HypervTaskHandle`` driven by stdout markers and exit-code polling.
-- Aspects-driven transport — transport is ``ICommandRunner.run(["pwsh", ...])`` over WinRM or SSH; credentials enter as ``HypervWinrmCredential`` from ``automojo-credentials``; every behaviour-bearing call accepts ``aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS``.
+- Aspects-driven transport — transport is ``ICommandRunner.run(["pwsh", ...])`` over WinRM or SSH; credentials enter as ``HypervWinrmCredential`` from ``codecraftai-credentials``; every behaviour-bearing call accepts ``aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS``.
 
 Repository Structure
 ====================
 
 - ``development/`` - Runtime environment scripts.
 - ``repository-setup/`` - Repository homing and setup scripts.
-- ``source/packages/automojo/interop/hyperv/`` - Package source code.
-- ``source/testroots/testbase/automojo/tests/interop/hyperv/`` - TestBase test roots.
+- ``source/packages/ccai/interop/hyperv/`` - Package source code.
+- ``source/testroots/testbase/ccai/tests/interop/hyperv/`` - TestBase test roots.
 - ``specs/`` - Requirements, design, and task documentation (Kiro-style).
 - ``userguide/`` - Standards, conventions, and documentation.
 

@@ -2,7 +2,7 @@
 
 ## Package Skeleton
 
-- [x] 1. Create `source/packages/automojo/interop/hyperv/` package tree with `pwsh/`, `apigroups/`, `model/`, `specs/`, `exceptions/` subpackages.
+- [x] 1. Create `source/packages/ccai/interop/hyperv/` package tree with `pwsh/`, `apigroups/`, `model/`, `specs/`, `exceptions/` subpackages.
 - [x] 2. Add `aspectshyperv.py` defining `AspectsRunner` and `DEFAULT_HYPERV_ASPECTS`.
 
 ## PowerShell Substrate

@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "automojo-interop-hyperv"
-description = "Automation Mojo - Hyper-V interop client"
+name = "codecraftai-interop-hyperv"
+description = "Code Craft AI - Hyper-V interop client"
 version = "0.0.1"
 authors = []
 readme = "README.rst"
@@ -13,9 +13,9 @@ classifiers = [
 keywords = [
     "python",
     "automation",
-    "automojo"
+    "ccai"
 ]
-packages = [{include="automojo", from="source/packages"}]
+packages = [{include="ccai", from="source/packages"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"

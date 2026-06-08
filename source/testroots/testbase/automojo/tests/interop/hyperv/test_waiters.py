@@ -4,7 +4,7 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
@@ -14,16 +14,16 @@ import pytest
 
 from hypothesis import given, settings, strategies as st
 
-from automojo.interfaces.itaskhandle import TaskState
+from ccai.interfaces.itaskhandle import TaskState
 
-from automojo.interop.hyperv.aspectshyperv import AspectsRunner
-from automojo.interop.hyperv.hypervclient import HypervClient
-from automojo.interop.hyperv.hypervwinrmcredential import (
+from ccai.interop.hyperv.aspectshyperv import AspectsRunner
+from ccai.interop.hyperv.hypervclient import HypervClient
+from ccai.interop.hyperv.hypervwinrmcredential import (
     HypervWinrmCredential
 )
-from automojo.interop.hyperv.model.hypervtaskhandle import HypervTaskHandle
+from ccai.interop.hyperv.model.hypervtaskhandle import HypervTaskHandle
 
-from automojo.tests.interop.hyperv.mockcommandrunner import MockCommandRunner
+from ccai.tests.interop.hyperv.mockcommandrunner import MockCommandRunner
 
 
 def _credential() -> HypervWinrmCredential:
@@ -46,7 +46,7 @@ class _StreamJobsGroup:
     """
 
     def __init__(self, *, states):
-        from automojo.interop.hyperv.model.hypervjobinfo import HypervJobInfo
+        from ccai.interop.hyperv.model.hypervjobinfo import HypervJobInfo
         self._infos = []
         for index, state in enumerate(states):
             record = {"Id": "job-1", "Name": "j",

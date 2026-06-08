@@ -9,13 +9,13 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 from typing import Callable, Dict, List, Optional
 
-from automojo.interfaces.icommandrunner import RunResult
+from ccai.interfaces.icommandrunner import RunResult
 
 
 class MockCommandRunner:
