@@ -16,6 +16,7 @@ from ccai.interop.hyperv.aspectshyperv import (
     AspectsRunner, DEFAULT_HYPERV_ASPECTS
 )
 from ccai.interop.hyperv.apigroups.vmsgroup import VmsGroup
+from ccai.interop.hyperv.exceptions.hypervcmdleterror import HypervCmdletError
 from ccai.interop.hyperv.pwsh.powershelldispatcher import (
     PowershellDispatcher
 )
@@ -145,9 +146,6 @@ class HardwareGroup:
 
             :raises: HypervCmdletError
         """
-        from ccai.interop.hyperv.exceptions.hypervcmdleterror import (
-            HypervCmdletError
-        )
         current = self._vms_group.get_vm(name=name, aspects=aspects)
         if current is not None and current.generation == generation:
             return

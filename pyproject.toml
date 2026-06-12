@@ -2,13 +2,13 @@
 name = "codecraftai-interop-hyperv"
 description = "Code Craft AI - Hyper-V interop client"
 version = "0.0.1"
-authors = []
+authors = ["Myron Walker <myron.walker@gmail.com>"]
 readme = "README.rst"
-license = "LICENSE.txt"
+license = "LicenseRef-CodeCraftAI-Dual-License"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: POSIX"
+    "License :: Other/Proprietary License",
+    "Operating System :: OS Independent"
 ]
 keywords = [
     "python",
@@ -19,6 +19,9 @@ packages = [{include="ccai", from="source/packages"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
+codecraftai-errors = { git = "https://github.com/automationmojo/codecraftai-errors.git", branch = "main" }
+codecraftai-interfaces = { git = "https://github.com/automationmojo/codecraftai-interfaces.git", branch = "main" }
+codecraftai-waiting = { git = "https://github.com/automationmojo/codecraftai-waiting.git", branch = "main" }
 
 [tool.poetry.group.dev.dependencies]
 hypothesis = ">=6.0.0"

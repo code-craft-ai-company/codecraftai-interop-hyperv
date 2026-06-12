@@ -40,18 +40,20 @@ not apply** — there is no REST surface to talk to.
 The client covers host capability and node enumeration, virtual switch
 management (External / Internal / Private), virtual disk (VHDX)
 management, VM lifecycle (New/Start/Stop/Restart/Shutdown/Remove),
-template / sysprep-from-VHDX provisioning, VM hardware configuration
-(processors, memory, generation, secure boot), virtual NIC and disk
-attach-detach, checkpoint (snapshot) management, and PS-Session-based
-guest customization where the cmdlet surface allows. Long-running ops
-(import/export, large VHDX create) return a typed
-`HypervTaskHandle` driven by stdout markers and exit-code polling.
+VM hardware configuration (processors, memory, generation, secure boot),
+virtual NIC and disk attach-detach, and checkpoint (snapshot) management.
+(Template / sysprep-from-VHDX provisioning is out of scope here and lives in
+`codecraftai-provisioning/venues/hyperv`; long-running background-job task
+handles such as import/export are not yet implemented — the current
+operations are synchronous.)
 
 The transport mechanic is `ICommandRunner.run(["pwsh","-NoProfile","-Command", ...])`,
 or against an SSH-running Windows host, the same runner via
-`SSHCommandRunner` against the OpenSSH-for-Windows surface. Credentials
-enter as `HypervWinrmCredential` from `codecraftai-credentials` (the WinRM
-endpoint, username, password / NTLM hash, transport preference).
+`SSHCommandRunner` against the OpenSSH-for-Windows surface. The injected
+`ICommandRunner` carries the transport authentication; `HypervWinrmCredential`
+is a standalone container describing the WinRM endpoint and auth material
+(username, password / NTLM hash, transport preference) for callers that
+configure the runner.
 Every behaviour-bearing method accepts
 `aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS`.
 
@@ -88,7 +90,7 @@ When work is being done on this repository using the Codex web environment.  Use
 When checking out the code for this repository in order to test changes, agents must:
 
 * run the 'repository-setup/rehome-repository' script.  It creates a needed '.env' file.
-* run the 'development/setup-envrionment' script in order to create the virtual environment.
+* run the 'development/setup-environment' script in order to create the virtual environment.
 
 # Project Specific Rules
 

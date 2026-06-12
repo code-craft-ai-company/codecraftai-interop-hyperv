@@ -14,10 +14,10 @@ __credits__ = []
 
 
 import os
-import time
 
 from ccai.errors.exceptions import ConfigurationError
 from ccai.interfaces.icommandrunner import ICommandRunner
+from ccai.waiting import wait_for_it, WaitContext
 
 from ccai.interop.hyperv.apigroups.adaptersgroup import AdaptersGroup
 from ccai.interop.hyperv.apigroups.checkpointsgroup import (
@@ -209,35 +209,41 @@ class HypervClient:
             :returns: The HypervVm once it reaches the desired state.
             :raises: TimeoutError
         """
-        deadline = time.monotonic() + aspects.completion_timeout
+        # The poll cadence/timeout is owned by codecraftai-waiting's wait_for_it;
+        # the looper returns True once the VM reaches the desired state and raises
+        # a descriptive TimeoutError on the final attempt.
+        result_box = {"vm": None}
 
-        while True:
+        def state_looper(wctx: WaitContext) -> bool:
             current = self._vms.get_vm(name=name, aspects=aspects)
-            if current is not None:
-                if current.state.lower() == desired_state.lower():
-                    rtnval = current
-                    return rtnval
+            result_box["vm"] = current
 
-            now = time.monotonic()
-            if now >= deadline:
+            if current is not None and current.state.lower() == desired_state.lower():
+                return True
+
+            if wctx.final_attempt:
                 err_msg_lines = ["Timed out waiting for Hyper-V VM state."]
                 err_msg_lines.append("VM: {}".format(name))
-                err_msg_lines.append("DESIRED-STATE: {}".format(
-                    desired_state
-                ))
+                err_msg_lines.append("DESIRED-STATE: {}".format(desired_state))
                 if current is not None:
-                    err_msg_lines.append("LAST-STATE: {}".format(
-                        current.state
-                    ))
+                    err_msg_lines.append("LAST-STATE: {}".format(current.state))
                 else:
                     err_msg_lines.append("LAST-STATE: <not found>")
-                err_msg_lines.append("TIMEOUT: {}".format(
-                    aspects.completion_timeout
-                ))
+                err_msg_lines.append("TIMEOUT: {}".format(aspects.completion_timeout))
                 err_msg = os.linesep.join(err_msg_lines)
-                raise TimeoutError(err_msg)
+                raise TimeoutError(err_msg) from None
 
-            time.sleep(aspects.completion_interval)
+            return False
+
+        wait_for_it(
+            state_looper,
+            what_for="Hyper-V VM '{}' to reach state '{}'".format(name, desired_state),
+            interval=aspects.completion_interval,
+            timeout=aspects.completion_timeout,
+        )
+
+        rtnval = result_box["vm"]
+        return rtnval
 
 
 __all__ = ["HypervClient"]
