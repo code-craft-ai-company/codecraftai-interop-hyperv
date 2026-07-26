@@ -12,7 +12,8 @@ import json
 
 import pytest
 
-from hypothesis import given, settings, strategies as st
+from ccai.testbase.properties import given
+from ccai.testbase.properties import strategies as st
 
 from ccai.interfaces.itaskhandle import TaskState
 
@@ -95,8 +96,8 @@ def test_task_handle_times_out_when_never_terminal():
 _TERMINAL_STATES = ("Completed", "Failed", "Stopped")
 
 
-@settings(deadline=None, max_examples=40)
-@given(running_count=st.integers(min_value=0, max_value=6),
+@given(
+    constraints={"max_examples": 40},running_count=st.integers(min_value=0, max_value=6),
        terminal=st.sampled_from(_TERMINAL_STATES))
 def test_task_handle_terminal_correctness(running_count, terminal):
     states = ["Running"] * running_count + [terminal]
