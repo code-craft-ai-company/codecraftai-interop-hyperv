@@ -7,7 +7,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.testbase.properties import given
 from ccai.testbase.properties import strategies as st
@@ -52,20 +53,20 @@ def test_render_argv_shape():
 
 def test_literal_parameter_rejects_injection():
     builder = PwshScriptBuilder(cmdlet="New-VM")
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         builder.literal_parameter(name="Count", value="4; rm -rf /")
     return
 
 
 def test_param_name_must_be_alphanumeric():
     builder = PwshScriptBuilder(cmdlet="New-VM")
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         builder.parameter(name="Na me", value="x")
     return
 
 
 def test_cmdlet_rejects_statement_separator():
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         PwshScriptBuilder(cmdlet="Get-VM; Remove-VM")
     return
 

@@ -8,9 +8,11 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
+from ccai import testbase
+
+
 import json
 
-import pytest
 
 from ccai.errors.exceptions import ConfigurationError
 
@@ -40,13 +42,13 @@ def _credential() -> HypervWinrmCredential:
 
 def test_construct_requires_hyperv_credential():
     runner = MockCommandRunner()
-    with pytest.raises(ConfigurationError):
+    with testbase.raises(ConfigurationError):
         HypervClient(runner=runner, credential=object())
     return
 
 
 def test_credential_rejects_missing_auth_material():
-    with pytest.raises(ConfigurationError):
+    with testbase.raises(ConfigurationError):
         HypervWinrmCredential(endpoint="h", username="u")
     return
 
@@ -181,7 +183,7 @@ def test_cmdlet_error_reclassification_on_nonzero_exit():
     runner.seed(contains="Get-VMHost", stdout="",
                 stderr="Access denied", exit_code=1)
     client = HypervClient(runner=runner, credential=_credential())
-    with pytest.raises(HypervCmdletError) as excinfo:
+    with testbase.raises(HypervCmdletError) as excinfo:
         client.host.host_info()
     assert excinfo.value.exit_code == 1
     assert "Access denied" in str(excinfo.value)
@@ -192,7 +194,7 @@ def test_cmdlet_error_on_timeout():
     runner = MockCommandRunner()
     runner.seed(contains="Get-VMHost", stdout="", timed_out=True)
     client = HypervClient(runner=runner, credential=_credential())
-    with pytest.raises(HypervCmdletError):
+    with testbase.raises(HypervCmdletError):
         client.host.host_info()
     return
 
@@ -222,8 +224,8 @@ def test_aspects_runner_is_immutable():
         DEFAULT_HYPERV_ASPECTS,
     )
     aspects = AspectsRunner()
-    with pytest.raises(AttributeError):
+    with testbase.raises(AttributeError):
         aspects.elevated = False
-    with pytest.raises(AttributeError):
+    with testbase.raises(AttributeError):
         DEFAULT_HYPERV_ASPECTS.max_attempts = 99
     return

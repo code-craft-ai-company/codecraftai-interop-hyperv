@@ -8,7 +8,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.testbase.properties import given
 from ccai.testbase.properties import strategies as st
@@ -38,19 +39,19 @@ def test_quote_leaves_metacharacters_literal():
 
 
 def test_quote_rejects_newline():
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         pwsh_quote(value="line1\nline2")
     return
 
 
 def test_quote_rejects_carriage_return():
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         pwsh_quote(value="line1\rline2")
     return
 
 
 def test_quote_rejects_null_byte():
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         pwsh_quote(value="bad\x00value")
     return
 
@@ -89,6 +90,6 @@ def test_quote_output_is_single_quoted(value):
 
 @given(prefix=_SAFE_TEXT, suffix=_SAFE_TEXT)
 def test_quote_rejects_embedded_newline_anywhere(prefix, suffix):
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         pwsh_quote(value=prefix + "\n" + suffix)
     return

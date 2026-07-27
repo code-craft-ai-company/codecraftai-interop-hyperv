@@ -8,9 +8,11 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
+from ccai import testbase
+
+
 import json
 
-import pytest
 
 from ccai.testbase.properties import given
 from ccai.testbase.properties import strategies as st
@@ -88,7 +90,7 @@ def test_task_handle_times_out_when_never_terminal():
     handle = HypervTaskHandle(job_id="job-1", jobs_group=jobs)
     aspects = AspectsRunner(completion_interval=0.001,
                             completion_timeout=0.05)
-    with pytest.raises(TimeoutError):
+    with testbase.raises(TimeoutError):
         handle.wait(aspects=aspects)
     return
 
@@ -137,7 +139,7 @@ def test_wait_for_state_times_out():
     client = HypervClient(runner=runner, credential=_credential())
     aspects = AspectsRunner(completion_interval=0.001,
                             completion_timeout=0.05)
-    with pytest.raises(TimeoutError):
+    with testbase.raises(TimeoutError):
         client.wait_for_state(name="vm01", desired_state="Running",
                               aspects=aspects)
     return
