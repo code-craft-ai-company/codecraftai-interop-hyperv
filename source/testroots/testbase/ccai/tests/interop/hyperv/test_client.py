@@ -29,7 +29,7 @@ from ccai.interop.hyperv.specs.hypervvmcreatespec import (
     HypervVmCreateSpec
 )
 
-from ccai.tests.interop.hyperv.mockcommandrunner import MockCommandRunner
+from .mockcommandrunner import MockCommandRunner
 
 
 def _credential() -> HypervWinrmCredential:

@@ -26,7 +26,7 @@ from ccai.interop.hyperv.hypervwinrmcredential import (
 )
 from ccai.interop.hyperv.model.hypervtaskhandle import HypervTaskHandle
 
-from ccai.tests.interop.hyperv.mockcommandrunner import MockCommandRunner
+from .mockcommandrunner import MockCommandRunner
 
 
 def _credential() -> HypervWinrmCredential:
