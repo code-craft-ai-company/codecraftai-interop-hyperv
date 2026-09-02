@@ -34,7 +34,7 @@ modules (`NetAdapter`, `Storage`). These are invoked remotely over
 WinRM. To stay aligned with the suite-wide "one transport per package"
 rule and to remain consistent with the `codecraftai-sysman-windows`
 package, this client speaks PowerShell exclusively, executed through an
-`ICommandRunner` from `codecraftai-interfaces`. **`RestClientBase` does
+`ICommandRunner` from `codecraftai-foundations`. **`RestClientBase` does
 not apply** — there is no REST surface to talk to.
 
 The client covers host capability and node enumeration, virtual switch
@@ -94,7 +94,7 @@ When checking out the code for this repository in order to test changes, agents 
 
 # Project Specific Rules
 
-- This package is a CLI-shaped client driving PowerShell via `ICommandRunner` from `codecraftai-interfaces`. It does NOT use `RestClientBase` because Hyper-V has no REST surface.
+- This package is a CLI-shaped client driving PowerShell via `ICommandRunner` from `codecraftai-foundations`. It does NOT use `RestClientBase` because Hyper-V has no REST surface.
 - One transport per package: this package SHALL NOT mix PowerShell cmdlet invocation with REST or native bindings.
 - Every public method takes `aspects: AspectsRunner = DEFAULT_HYPERV_ASPECTS` as a named-only parameter.
 - All PowerShell argument substitution flows through a safe quoter that rejects newline/null injection and validates that the rendered command is single-statement.
