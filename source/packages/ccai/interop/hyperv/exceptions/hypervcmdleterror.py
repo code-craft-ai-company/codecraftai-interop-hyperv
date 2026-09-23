@@ -12,7 +12,7 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-from typing import List, Optional
+from typing import Optional
 
 
 class HypervCmdletError(RuntimeError):
